@@ -1,1 +1,55 @@
-<p>block works!</p>
+<mat-card class="container mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>SHA256</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+        <div class="h-container">
+            <span class="spacer"></span>
+            <form [formGroup]="formGroup">
+                <mat-form-field style="width: 80%" appearance="fill">
+                    <mat-label>Block</mat-label>
+                    <input min="1" type="number" matInput formControlName="blockNumber">
+                </mat-form-field>
+
+                <mat-form-field style="width: 80%" appearance="fill">
+                    <mat-label>Nonce</mat-label>
+                    <input min="1" type="number" matInput formControlName="nonce">
+                </mat-form-field>
+
+                <mat-form-field style="width: 80%" appearance="fill">
+                    <mat-label>Data</mat-label>
+                    <textarea matInput formControlName="data"
+                              placeholder="Hello, world"
+                              cdkTextareaAutosize
+                              cdkAutosizeMinRows="5"
+                              cdkAutosizeMaxRows="5"
+                    ></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="hash" appearance="fill">
+                    <mat-label>hash</mat-label>
+                    <textarea matInput formControlName="hash"
+                              [errorStateMatcher]="matcher"
+                              cdkTextareaAutosize
+                              cdkAutosizeMinRows="1"
+                              cdkAutosizeMaxRows="1"
+                    ></textarea>
+                </mat-form-field>
+            </form>
+            <span class="spacer"></span>
+        </div>
+
+
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button style="margin-right: 25px"
+                mat-raised-button color="primary"
+                *ngIf="!mining"
+                (click)="mine().then()">
+            Mine!
+        </button>
+        <mat-spinner *ngIf="mining"></mat-spinner>
+    </mat-card-actions>
+</mat-card>

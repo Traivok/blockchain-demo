@@ -4,10 +4,6 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class CryptoService {
-
-    constructor() {
-    }
-
     public async hash(data: string): Promise<string> {
         const enc = new TextEncoder();
         const dec = new TextDecoder(enc.encoding);
