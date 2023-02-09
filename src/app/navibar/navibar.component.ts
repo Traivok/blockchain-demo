@@ -1,6 +1,7 @@
-import { Component }                     from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { routes }                        from '../app-routing.module';
+import { Component, OnInit }                            from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
+import { routes }                                       from '../app-routing.module';
+import { filter }                                       from 'rxjs';
 
 @Component({
     selector:    'app-navibar',
@@ -11,23 +12,22 @@ export class NavibarComponent {
 
     public readonly routes: string[];
 
-    activeLink: string;
+    activeLink: string = '';
 
     constructor(private router: Router) {
-
         this.routes = routes.reduce((prev: string[], curr: Route) => {
+            // filter paths
             if (typeof curr.path === 'string' && curr.path.length)
                 prev.push(curr.path);
 
             return prev;
         }, []);
 
-        this.activeLink = this.routes[0] ?? '';
-        this.navigateTo(this.activeLink); // FIXME
-    }
-
-    public navigateTo(route: string): void {
-        this.router.navigate([ route ]).catch();
-        this.activeLink = route;
+        router.events
+            .pipe(filter(v => v instanceof NavigationEnd))
+            .subscribe((val) => {
+                if (val instanceof NavigationEnd)
+                    this.activeLink = val.url.replace(/^\//g, '');
+            });
     }
 }

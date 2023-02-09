@@ -4,7 +4,6 @@
     <nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
         <a mat-tab-link *ngFor="let route of routes"
            [routerLink]="route"
-           (click)="navigateTo(route)"
            [active]="activeLink == route"> {{route | titlecase}} </a>
     </nav>
     <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
