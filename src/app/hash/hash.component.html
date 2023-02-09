@@ -1,1 +1,38 @@
-<p>hash works!</p>
+<mat-card class="container mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>SHA256</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="h-container">
+            <span class="spacer"></span>
+            <mat-form-field style="width: 80%" appearance="fill">
+                <mat-label>Data</mat-label>
+                <textarea matInput [(ngModel)]="data"
+                          (ngModelChange)="hashData($event)"
+                          placeholder="Hello, world"
+                          cdkTextareaAutosize
+                          cdkAutosizeMinRows="5"
+                          cdkAutosizeMaxRows="5"
+                ></textarea>
+            </mat-form-field>
+            <span class="spacer"></span>
+        </div>
+        <!--        <p>{{longText}}</p>-->
+    </mat-card-content>
+    <mat-card-footer>
+        <div class="h-container">
+            <span class="spacer"></span>
+            <mat-form-field style="width: 80%" appearance="fill">
+                <mat-label>hash</mat-label>
+                <textarea matInput disabled
+                          [ngModel]="hash$ | async"
+                          cdkTextareaAutosize
+                          cdkAutosizeMinRows="1"
+                          cdkAutosizeMaxRows="1"
+                ></textarea>
+            </mat-form-field>
+            <span class="spacer"></span>
+        </div>
+
+    </mat-card-footer>
+</mat-card>

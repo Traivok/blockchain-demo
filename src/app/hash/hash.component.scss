@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.container {
+  width: 60%;
+  height: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.h-container {
+  display: flex;
+  flex-direction: row;
+}
