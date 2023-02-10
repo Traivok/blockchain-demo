@@ -1,17 +1,9 @@
-import { Component, OnInit }                                                     from '@angular/core';
-import { filter, from, map, Observable, of, pairwise, ReplaySubject, startWith } from 'rxjs';
-import { CryptoService }                                                         from '../crypto.service';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm }       from '@angular/forms';
-import { ErrorStateMatcher }                                                     from '@angular/material/core';
+import { Component, OnInit }                                                           from '@angular/core';
+import { filter, from, map, Observable, of, pairwise, ReplaySubject, startWith }       from 'rxjs';
+import { CryptoService }                                                               from '../crypto.service';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher }                                                           from '@angular/material/core';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-    constructor(public readonly difficulty = 4) {}
-
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        const { hash = '' } = control?.value;
-        return hash.startsWith('0'.repeat(this.difficulty));
-    }
-}
 
 @Component({
     selector:    'app-block',
@@ -21,24 +13,31 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class BlockComponent implements OnInit {
     public readonly difficulty = 4;
     public readonly maxNonce   = 0x100000;
-    matcher                    = new MyErrorStateMatcher(this.difficulty);
+
     public formGroup: FormGroup<{
         data: FormControl<string | null>,
         blockNumber: FormControl<number | null>
         nonce: FormControl<number | null>,
         hash: FormControl<string | null>,
     }>;
-    public mining              = false;
+    public mining = false;
 
     constructor(public crypto: CryptoService,
                 public fb: FormBuilder) {
+
+        const zeroesPattern = new RegExp('^' + '0'.repeat(this.difficulty) + '.*$');
+        console.log(zeroesPattern);
 
         this.formGroup = this.fb.group({
             data:        [ '' ],
             blockNumber: [ 1 ],
             nonce:       [ 8451 ],
-            hash:        [ '0000d47b65996eb8caa83faae58d071f2a762c14703f7f1d5cf4bd0ea9e6d8e1' ],
+            hash:        [ '0000d47b65996eb8caa83faae58d071f2a762c14703f7f1d5cf4bd0ea9e6d8e1',
+                Validators.pattern(zeroesPattern),
+            ],
         });
+
+        this.formGroup.controls['hash'].markAsTouched();
     }
 
     public ngOnInit(): void {
@@ -71,12 +70,11 @@ export class BlockComponent implements OnInit {
     }
 
     public async mine() {
-        this.mining = true;
+        this.mining                                = true;
         const { data = '', blockNumber = 1, hash } = this.formGroup.value;
         this.formGroup.disable();
 
         for (let nonce = 0; nonce < this.maxNonce; ++nonce) {
-            console.log('nonce', nonce);
             const encoded = JSON.stringify({ data, blockNumber, nonce });
             const hash    = await this.crypto.hash(encoded);
 

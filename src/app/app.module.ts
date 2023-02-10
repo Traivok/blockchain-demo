@@ -17,6 +17,7 @@ import { MatCardModule }                    from '@angular/material/card';
 import { MatInputModule }                   from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule }         from '@angular/material/progress-spinner';
+import { MatProgressBarModule }             from '@angular/material/progress-bar';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import { MatProgressSpinnerModule }         from '@angular/material/progress-spi
         FormsModule,
         ReactiveFormsModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
     ],
     providers:    [],
     bootstrap:    [ AppComponent ],
