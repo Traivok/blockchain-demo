@@ -1,24 +1,18 @@
-import { Component, OnInit }                    from '@angular/core';
-import { CryptoService }                        from '../crypto.service';
-import { BehaviorSubject, from, ReplaySubject } from 'rxjs';
+import { Component, OnInit }   from '@angular/core';
+import { from, ReplaySubject } from 'rxjs';
+import sha256                  from '../sha256';
+import { Sha256Stream }        from '../sha256.stream';
 
 @Component({
     selector:    'app-hash',
     templateUrl: './hash.component.html',
     styleUrls:   [ './hash.component.scss' ],
 })
-export class HashComponent implements OnInit {
+export class HashComponent {
     public data: string = '';
-    public hash$        = new ReplaySubject<string>();
-
-    constructor(public crypto: CryptoService) {}
-
-    public ngOnInit(): void {
-        this.hashData(this.data);
-    }
+    public hashStream   = new Sha256Stream();
 
     public hashData(data: string): void {
-        from(this.crypto.hash(data))
-            .subscribe(hash => this.hash$.next(hash));
+        this.hashStream.data = data;
     }
 }

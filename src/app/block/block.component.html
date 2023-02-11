@@ -6,36 +6,39 @@
 
         <div class="h-container">
             <span class="spacer"></span>
-            <form [formGroup]="formGroup">
-                <mat-form-field style="width: 80%" appearance="fill">
-                    <mat-label>Block</mat-label>
-                    <input min="1" type="number" matInput formControlName="blockNumber">
-                </mat-form-field>
+            <div>
+                <form [formGroup]="formGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Block</mat-label>
+                        <input min="1" type="number" matInput formControlName="blockNumber">
+                    </mat-form-field>
 
-                <mat-form-field style="width: 80%" appearance="fill">
-                    <mat-label>Nonce</mat-label>
-                    <input min="1" type="number" matInput formControlName="nonce">
-                </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nonce</mat-label>
+                        <input min="1" type="number" matInput formControlName="nonce">
+                    </mat-form-field>
 
-                <mat-form-field style="width: 80%" appearance="fill">
-                    <mat-label>Data</mat-label>
-                    <textarea matInput formControlName="data"
-                              placeholder="Hello, world"
-                              cdkTextareaAutosize
-                              cdkAutosizeMinRows="5"
-                              cdkAutosizeMaxRows="5"
-                    ></textarea>
-                </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Data</mat-label>
+                        <textarea matInput formControlName="data"
+                                  placeholder="Hello, world"
+                                  cdkTextareaAutosize
+                                  cdkAutosizeMinRows="5"
+                                  cdkAutosizeMaxRows="5"
+                        ></textarea>
+                    </mat-form-field>
 
+                </form>
                 <mat-form-field class="hash" appearance="fill">
                     <mat-label>hash</mat-label>
-                    <textarea matInput formControlName="hash"
+                    <textarea matInput [ngModel]="hashStream.stream$ | async"
+
                               cdkTextareaAutosize
                               cdkAutosizeMinRows="1"
                               cdkAutosizeMaxRows="1"
                     ></textarea>
                 </mat-form-field>
-            </form>
+            </div>
             <span class="spacer"></span>
         </div>
 

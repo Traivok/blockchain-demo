@@ -25,7 +25,7 @@
             <mat-form-field style="width: 80%" appearance="fill">
                 <mat-label>hash</mat-label>
                 <textarea matInput disabled
-                          [ngModel]="hash$ | async"
+                          [ngModel]="hashStream.stream$ | async"
                           cdkTextareaAutosize
                           cdkAutosizeMinRows="1"
                           cdkAutosizeMaxRows="1"
